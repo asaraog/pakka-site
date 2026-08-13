@@ -273,27 +273,20 @@ footer nav { margin-bottom: 1rem; }
   outline-offset: 2px;
 }
 
-/* ---- language switch: whole page in ONE language at a time ---- */
+/* ---- language switch: two page trees (/ hindi, /en/ english), the pill is
+        just a link. One language per page = nothing to reflow, ever. ---- */
 
-html[data-lang="hi"] .lang-en { display: none; }
-html[data-lang="en"] .lang-hi { display: none; }
-/* no-JS fallback: before lang.js runs, html has no data-lang and BOTH show */
+html[lang="hi"] main { font-size: 1.06em; line-height: 1.75; }
 
-.lang-hi { font-size: 1.08em; line-height: 1.75; }
-h1.lang-hi, h2 .lang-hi, .price .lang-hi { font-size: inherit; line-height: inherit; }
-
-#lang-btn {
-  font: inherit;
+.lang-pill {
   font-size: 0.85rem;
   color: var(--muted);
-  background: none;
+  text-decoration: none;
   border: 1px solid var(--rule);
   border-radius: 4px;
   padding: 0.15rem 0.6rem;
-  cursor: pointer;
   white-space: nowrap;
 }
-#lang-btn:hover { border-color: var(--accent); }
-#lang-btn .l-sep { margin: 0 0.35rem; color: var(--rule); }
-html[data-lang="hi"] #lang-btn .l-hi,
-html[data-lang="en"] #lang-btn .l-en { color: var(--accent); font-weight: 700; }
+.lang-pill:hover { border-color: var(--accent); }
+.lang-pill .l-sep { margin: 0 0.35rem; color: var(--rule); }
+.lang-pill .on { color: var(--accent); font-weight: 700; }
