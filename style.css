@@ -284,12 +284,16 @@ h1.lang-hi, h2 .lang-hi, .price .lang-hi { font-size: inherit; line-height: inhe
 
 #lang-btn {
   font: inherit;
-  font-size: 0.9rem;
-  color: var(--accent);
+  font-size: 0.85rem;
+  color: var(--muted);
   background: none;
   border: 1px solid var(--rule);
   border-radius: 4px;
-  padding: 0.15rem 0.7rem;
+  padding: 0.15rem 0.6rem;
   cursor: pointer;
+  white-space: nowrap;
 }
 #lang-btn:hover { border-color: var(--accent); }
+#lang-btn .l-sep { margin: 0 0.35rem; color: var(--rule); }
+html[data-lang="hi"] #lang-btn .l-hi,
+html[data-lang="en"] #lang-btn .l-en { color: var(--accent); font-weight: 700; }

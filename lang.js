@@ -8,20 +8,16 @@
   var lang = saved === 'en' ? 'en' : 'hi';
   document.documentElement.setAttribute('data-lang', lang);
 
-  function label() {
-    var b = document.getElementById('lang-btn');
-    if (b) b.textContent = document.documentElement.getAttribute('data-lang') === 'hi'
-      ? 'English' : 'हिंदी';
-  }
+  /* The button never changes size: both words are always in it, CSS just
+     highlights the active one. A control that moves under the pointer is a
+     broken control. */
   document.addEventListener('DOMContentLoaded', function () {
-    label();
     var b = document.getElementById('lang-btn');
     if (!b) return;
     b.addEventListener('click', function () {
       var next = document.documentElement.getAttribute('data-lang') === 'hi' ? 'en' : 'hi';
       document.documentElement.setAttribute('data-lang', next);
       try { localStorage.setItem('pakka-lang', next); } catch (e) {}
-      label();
     });
   });
 })();
