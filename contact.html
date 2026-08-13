@@ -27,8 +27,8 @@
   <h1>How to reach us</h1>
 
   <p class="lede">
-    Pakka is run by a single proprietor. Email is answered directly, usually within one
-    working day.
+    Pakka is run by a single proprietor. Messages are answered directly, usually within
+    one working day.
   </p>
 
   <h2>Business details</h2>
@@ -36,39 +36,62 @@
   <div class="scroller">
     <table>
       <tr><th>Legal entity</th><td>Pakka — sole proprietorship</td></tr>
-      <tr><th>Proprietor</th><td>Apoorv Saraogee</td></tr>
       <tr><th>Registration</th><td>Udyam-registered micro enterprise (MSME); registration number shared with counterparties on request</td></tr>
       <tr><th>Registered in</th><td>India</td></tr>
-      <tr><th>Email</th><td><a href="mailto:apoorv@outlook.com">apoorv@outlook.com</a></td></tr>
+      <tr><th>Proprietor &amp; email</th><td>Published in our <a href="terms.html#contact">Terms &amp; Conditions</a></td></tr>
     </table>
   </div>
 
-  <h2>Support</h2>
+  <h2>Write to us</h2>
 
   <p>
-    For anything to do with your account, your calendar, billing, or a booking that did
-    not behave as expected, write to
-    <a href="mailto:apoorv@outlook.com">apoorv@outlook.com</a>.
+    Anything to do with your account, your calendar, billing, or a booking that did not
+    behave as expected — send it here. Support is provided in <strong>Hindi and
+    English</strong>; write in either.
   </p>
 
-  <p>
-    Support is provided in <strong>Hindi and English</strong>. You may write in either.
-  </p>
+  <form id="fb" novalidate>
+    <div class="card">
+      <label for="fb-msg"><strong>Your message</strong></label>
+      <textarea id="fb-msg" rows="5" maxlength="2000" required
+        placeholder="अपनी बात यहाँ लिखिए… / Write your message here…"></textarea>
+      <label for="fb-contact">How do we reach you? <span class="muted">(email or WhatsApp number — optional)</span></label>
+      <input id="fb-contact" type="text" maxlength="200" autocomplete="email">
+      <button type="submit" id="fb-send">Send / भेजें</button>
+      <p id="fb-note" role="status" aria-live="polite"></p>
+    </div>
+  </form>
+
+  <script>
+  (function () {
+    var f = document.getElementById('fb'), note = document.getElementById('fb-note'),
+        btn = document.getElementById('fb-send');
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var msg = document.getElementById('fb-msg').value.trim();
+      if (!msg) { note.textContent = 'लिखा कुछ नहीं — message is empty.'; return; }
+      btn.disabled = true; note.textContent = 'Sending…';
+      fetch('https://pakka-server.onrender.com/feedback', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ message: msg, contact: document.getElementById('fb-contact').value.trim() })
+      }).then(function (r) {
+        if (!r.ok) throw 0;
+        f.reset(); note.textContent = 'मिल गया ✅ Thanks — we read every message.';
+      }).catch(function () {
+        note.textContent = 'नहीं गया। Please try again, or use the email in our Terms.';
+      }).finally(function () { btn.disabled = false; });
+    });
+  })();
+  </script>
 
   <h2>Grievance Officer</h2>
 
   <p>
     In accordance with the Information Technology Act, 2000 and the rules made under it,
-    the name and contact details of the Grievance Officer are published below.
+    the name and contact details of the Grievance Officer are published in our
+    <a href="terms.html#contact">Terms &amp; Conditions</a>.
   </p>
-
-  <div class="card">
-    <p>
-      <strong>Apoorv Saraogee</strong><br>
-      Grievance Officer, Pakka<br>
-      <a href="mailto:apoorv@outlook.com">apoorv@outlook.com</a>
-    </p>
-  </div>
 
   <p>
     Grievances relating to the processing of personal information are acknowledged within
