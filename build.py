@@ -14,8 +14,8 @@ Run `python3 build.py` after editing anything in src/, then commit the lot.
 """
 import os, re, io
 
-PAGES = ['index.html', 'contact.html', 'terms.html', 'privacy.html', 'refunds.html']
-VER = 'v4'  # bump to bust cached CSS
+PAGES = ['index.html', 'contact.html', 'terms.html', 'privacy.html', 'refunds.html', 'shipping.html']
+VER = 'v5'  # bump to bust cached CSS
 
 def remove_lang(html, drop):
     """Remove every element whose class list contains `drop` (lang-hi/lang-en).
