@@ -272,3 +272,22 @@ footer nav { margin-bottom: 1rem; }
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+
+/* ---- bilingual: Hindi leads, English supports ---- */
+
+.hi-lead { font-size: 1.2rem; line-height: 1.75; }
+
+.en {
+  color: var(--muted);
+  font-size: 0.95rem;
+  display: block;
+  margin-top: 0.35rem;
+}
+
+li .en { margin-top: 0.15rem; }
+
+.en-h {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 0.85em;
+}
