@@ -6,6 +6,7 @@
 <title>Pakka — booking and payments on WhatsApp</title>
 <meta name="description" content="Pakka is WhatsApp-based booking and advance-payment software for small businesses in India. Hindi-native, monthly subscription, no commission.">
 <link rel="stylesheet" href="style.css">
+<script src="lang.js"></script>
 </head>
 <body>
 
@@ -17,97 +18,116 @@
       <a href="terms.html">Terms</a>
       <a href="privacy.html">Privacy</a>
       <a href="refunds.html">Refunds</a>
+      <button id="lang-btn" type="button" aria-label="Switch language">English</button>
     </nav>
   </div>
 </header>
 
 <main class="wrap">
 
-  <p class="hindi">बुकिंग और एडवांस — दोनों WhatsApp पर।</p>
-  <h1>ग्राहक मैसेज करे, आप सिर्फ़ हाँ बोलें।</h1>
+  <p class="hindi lang-hi">बुकिंग और एडवांस — दोनों WhatsApp पर।</p>
+  <p class="hindi lang-en">Bookings and advances — both on WhatsApp.</p>
+  <h1><span class="lang-hi">ग्राहक मैसेज करे, आप सिर्फ़ हाँ बोलें।</span><span class="lang-en">Your customer messages. You just say yes.</span></h1>
 
-  <p class="lede">
+  <p class="lede lang-hi">
     जो बुकिंग आप फ़ोन और WhatsApp पर हाथ से संभालते हैं, Pakka उसे अपने आप चलाता है —
-    आपकी मंज़ूरी के बिना कुछ पक्का नहीं होता।<br>
-    <span class="en">Pakka automates the bookings you already run by hand on WhatsApp.
-    Nothing is confirmed without your yes.</span>
+    आपकी मंज़ूरी के बिना कुछ पक्का नहीं होता।
+  </p>
+  <p class="lede lang-en">
+    Pakka automates the bookings you already run by hand on WhatsApp. Nothing is
+    confirmed without your yes.
   </p>
 
-  <h2>यह करता क्या है <span class="en-h">/ What it does</span></h2>
+  <h2><span class="lang-hi">यह करता क्या है</span><span class="lang-en">What it does</span></h2>
 
-  <p class="hi-lead">
+  <p class="lang-hi">
     ग्राहक आपके WhatsApp नंबर पर वैसे ही मैसेज करता है जैसे आज करता है — हिंदी में,
     Hinglish में। Pakka मैसेज पढ़ता है, आपका कैलेंडर देखता है, खाली समय बताता है।
     आपके फ़ोन पर बुकिंग आती है — <strong>✓ पक्का</strong> या <strong>✗ नहीं</strong>,
     एक बटन।
   </p>
-  <p class="en">
-    Customers message your WhatsApp number the way they already do. Pakka reads the
-    message, checks the calendar, offers free slots. You approve or decline with one tap.
+  <p class="lang-en">
+    A customer messages your WhatsApp number the way they already do, in Hindi or
+    Hinglish. Pakka reads the message, checks your calendar, and offers the free
+    times. The request lands on your phone — <strong>✓ पक्का</strong> or
+    <strong>✗ नहीं</strong>, one tap.
   </p>
 
-  <p class="hi-lead">
+  <p class="lang-hi">
     हाँ के बाद ग्राहक को एडवांस का UPI लिंक जाता है। पैसा <strong>सीधा आपकी अपनी UPI
     ID पर</strong> आता है — Pakka पैसे को कभी छूता नहीं।
   </p>
-  <p class="en">
-    On approval the customer gets a UPI link for the advance. Payment goes directly to
-    the business's own UPI ID. Pakka never receives, holds, or routes the money.
+  <p class="lang-en">
+    On approval the customer gets a UPI link for the advance. The payment goes
+    <strong>directly to your own UPI ID</strong> — Pakka never receives, holds, or
+    routes the money.
   </p>
 
-  <h2>किसके लिए <span class="en-h">/ Who it is for</span></h2>
+  <h2><span class="lang-hi">किसके लिए</span><span class="lang-en">Who it is for</span></h2>
 
-  <p class="hi-lead">
+  <p class="lang-hi">
     टर्फ़ और स्पोर्ट्स ग्राउंड, कोर्ट, क्लिनिक, सैलून — जिनके पास एक से तीन बुक होने
     वाली चीज़ें हैं, और जिनका धंधा आज फ़ोन कॉल, कॉपी और WhatsApp पर चलता है।
   </p>
-  <p class="en">
+  <p class="lang-en">
     Turf and sports grounds, courts, clinics, salons — appointment-led businesses with
-    one to three bookable resources, running on calls, a paper register, and WhatsApp.
+    one to three bookable resources, running today on calls, a paper register, and a
+    WhatsApp thread.
   </p>
 
-  <h2>दाम <span class="en-h">/ Pricing</span></h2>
+  <h2><span class="lang-hi">दाम</span><span class="lang-en">Pricing</span></h2>
 
   <div class="card">
-    <span class="price">₹1,499 <small>/ month</small></span>
-    <p>एक जगह। जितनी चाहें बुकिंग। किसी बुकिंग पर कोई कमीशन नहीं।<br>
-    <span class="en">Single location. Unlimited bookings. No commission.</span></p>
+    <span class="price">₹1,499 <small>/ <span class="lang-hi">महीना</span><span class="lang-en">month</span></small></span>
+    <p class="lang-hi">एक जगह। जितनी चाहें बुकिंग। किसी बुकिंग पर कोई कमीशन नहीं।</p>
+    <p class="lang-en">Single location. Unlimited bookings. No commission on any booking.</p>
   </div>
 
   <div class="card">
-    <span class="price">₹2,499 <small>/ month</small></span>
-    <p>एक जगह पर कई ग्राउंड, कोर्ट या कमरे। कोई कमीशन नहीं।<br>
-    <span class="en">Multiple grounds, courts, or rooms at one location. No commission.</span></p>
+    <span class="price">₹2,499 <small>/ <span class="lang-hi">महीना</span><span class="lang-en">month</span></small></span>
+    <p class="lang-hi">एक जगह पर कई ग्राउंड, कोर्ट या कमरे। कोई कमीशन नहीं।</p>
+    <p class="lang-en">Multiple grounds, courts, or rooms at one location. No commission.</p>
   </div>
 
-  <p>
+  <p class="lang-hi">
+    महीने का बिल, भारतीय रुपये में। न सेटअप फ़ीस, न लॉक-इन — जब चाहें बंद करें। पूरी
+    शर्तें <a href="refunds.html">रिफंड पॉलिसी</a> में।
+  </p>
+  <p class="lang-en">
     Billed monthly in Indian rupees. No setup fee, no lock-in, cancel at any time. Full
     terms are in the <a href="refunds.html">refund and cancellation policy</a>.
   </p>
 
-  <h2>Pakka क्या नहीं है <span class="en-h">/ What Pakka is not</span></h2>
+  <h2><span class="lang-hi">Pakka क्या नहीं है</span><span class="lang-en">What Pakka is not</span></h2>
 
-  <ul>
+  <ul class="lang-hi">
     <li><strong>मार्केटप्लेस नहीं।</strong> हम आपका धंधा लिस्ट नहीं करते, ग्राहक नहीं
-      भेजते, बुकिंग से हिस्सा नहीं लेते। आपके ग्राहक आपके हैं।
-      <span class="en">Not a marketplace — no listings, no lead-gen, no cut.</span></li>
+      भेजते, बुकिंग से हिस्सा नहीं लेते। आपके ग्राहक आपके हैं।</li>
     <li><strong>पेमेंट कंपनी नहीं।</strong> एडवांस ग्राहक से सीधा आपकी UPI ID पर।
-      हम उस लेन-देन में कहीं नहीं हैं।
-      <span class="en">Not a payment service — funds never touch us.</span></li>
+      हम उस लेन-देन में कहीं नहीं हैं, और ग्राहक का पैसा कभी हमारे पास नहीं रुकता।</li>
     <li><strong>अपने आप कुछ नहीं।</strong> बुकिंग तभी पक्की जब आप कहें। सॉफ्टवेयर आपका
-      कैलेंडर आपसे पूछे बिना कभी नहीं भरता।
-      <span class="en">Not automatic — only your approval confirms a booking.</span></li>
+      कैलेंडर आपसे पूछे बिना कभी नहीं भरता।</li>
+  </ul>
+  <ul class="lang-en">
+    <li><strong>Not a marketplace.</strong> We do not list your business, send you
+      customers, or take a cut of a booking. Your customers are yours.</li>
+    <li><strong>Not a payment service.</strong> Advances are paid by the customer straight
+      to the business's own UPI ID. We are not a party to that transaction and hold no
+      customer funds at any point.</li>
+    <li><strong>Not automatic.</strong> A booking is confirmed only when the business owner
+      approves it. The software never commits your calendar on your behalf.</li>
   </ul>
 
-  <h2>शुरू कैसे करें <span class="en-h">/ Getting started</span></h2>
+  <h2><span class="lang-hi">शुरू कैसे करें</span><span class="lang-en">Getting started</span></h2>
 
-  <p class="hi-lead">
+  <p class="lang-hi">
     हम एक-एक करके, आपके साथ बैठ कर सेटअप करते हैं — आपका कैलेंडर, आपके दाम, आपकी UPI।
     <a href="contact.html">संपर्क पेज</a> से मैसेज भेजिए।
   </p>
-  <p class="en">
+  <p class="lang-en">
     Onboarding is done by hand, one business at a time. Send us a message from the
-    <a href="contact.html">contact page</a>.
+    <a href="contact.html">contact page</a> and we will set up your calendar, your
+    pricing, and your UPI details with you.
   </p>
 
 </main>

@@ -273,21 +273,23 @@ footer nav { margin-bottom: 1rem; }
   outline-offset: 2px;
 }
 
-/* ---- bilingual: Hindi leads, English supports ---- */
+/* ---- language switch: whole page in ONE language at a time ---- */
 
-.hi-lead { font-size: 1.2rem; line-height: 1.75; }
+html[data-lang="hi"] .lang-en { display: none; }
+html[data-lang="en"] .lang-hi { display: none; }
+/* no-JS fallback: before lang.js runs, html has no data-lang and BOTH show */
 
-.en {
-  color: var(--muted);
-  font-size: 0.95rem;
-  display: block;
-  margin-top: 0.35rem;
+.lang-hi { font-size: 1.08em; line-height: 1.75; }
+h1.lang-hi, h2 .lang-hi, .price .lang-hi { font-size: inherit; line-height: inherit; }
+
+#lang-btn {
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--accent);
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.15rem 0.7rem;
+  cursor: pointer;
 }
-
-li .en { margin-top: 0.15rem; }
-
-.en-h {
-  color: var(--muted);
-  font-weight: 400;
-  font-size: 0.85em;
-}
+#lang-btn:hover { border-color: var(--accent); }
