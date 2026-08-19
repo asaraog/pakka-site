@@ -17,6 +17,22 @@ import os, re, io
 PAGES = ['index.html', 'contact.html', 'terms.html', 'privacy.html', 'refunds.html', 'shipping.html']
 VER = 'v5'  # bump to bust cached CSS
 
+# GA4 Measurement ID, from analytics.google.com -> Admin -> Data Streams.
+# Left blank on purpose: with no ID, no analytics script is injected at all -
+# nothing gets built and shipped half-configured. Fill this in, run
+# `python3 build.py`, commit. Also update the "Analytics" line in privacy.html
+# once this is set, so the page matches what the site actually does.
+GA_ID = 'G-FV2BPPCZ4S'
+
+def analytics_snippet():
+    if not GA_ID:
+        return ''
+    return ('<script async src="https://www.googletagmanager.com/gtag/js?id=%s"></script>\n'
+            '<script>window.dataLayer=window.dataLayer||[];'
+            'function gtag(){dataLayer.push(arguments);}'
+            "gtag('js',new Date());gtag('config','%s');</script>\n"
+            % (GA_ID, GA_ID))
+
 def remove_lang(html, drop):
     """Remove every element whose class list contains `drop` (lang-hi/lang-en).
     Stack-walks matching close tags, so nested same-name tags survive."""
@@ -74,6 +90,7 @@ def build(page, lang):
         s = s.replace('<html lang="en">', '<html lang="hi">')
     s = s.replace('href="style.css"', 'href="style.css?%s"' % VER)
     s = s.replace('href="../style.css"', 'href="../style.css?%s"' % VER)
+    s = s.replace('</head>', analytics_snippet() + '</head>')
     return s
 
 os.makedirs('en', exist_ok=True)
