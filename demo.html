@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pakka — live demo</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="mark" href="index.html"><span class="dev">पक्का</span>Pakka</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="eyebrow">Live demo</p>
+  <h1>Send a WhatsApp message through Pakka</h1>
+  <p class="lede">
+    This button asks Pakka's server to send a WhatsApp message through the
+    WhatsApp Cloud API — the same call the booking bot makes when it replies
+    to a customer.
+  </p>
+
+  <div class="card">
+    <label for="to"><strong>Recipient</strong> (digits with country code)</label>
+    <input id="to" type="text" maxlength="15" placeholder="919XXXXXXXXX" style="width:100%">
+    <p><button id="go">Send message via Cloud API</button></p>
+    <p id="out" role="status" aria-live="polite"></p>
+  </div>
+</main>
+
+<script>
+(function () {
+  var k = new URLSearchParams(location.search).get('k') || '';
+  document.getElementById('go').onclick = function () {
+    var out = document.getElementById('out');
+    out.textContent = 'sending…';
+    fetch('https://pakka-server.onrender.com/demo-send?k=' + encodeURIComponent(k), {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ to: document.getElementById('to').value.replace(/\D/g, '') })
+    }).then(function (r) { return r.text(); })
+      .then(function (t) { out.textContent = t; })
+      .catch(function () { out.textContent = 'नहीं गया — try again.'; });
+  };
+})();
+</script>
+
+</body>
+</html>
