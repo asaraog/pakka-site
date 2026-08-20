@@ -27,6 +27,9 @@
   <div class="card">
     <label for="to"><strong>Recipient</strong> (digits with country code)</label>
     <input id="to" type="text" maxlength="15" placeholder="919XXXXXXXXX" style="width:100%">
+    <label for="msg"><strong>Message</strong></label>
+    <textarea id="msg" rows="3" maxlength="500" style="width:100%"
+      placeholder="आपकी बुकिंग पक्की है ✅ कल शाम 8 बजे मिलते हैं।"></textarea>
     <p><button id="go">Send message via Cloud API</button></p>
     <p id="out" role="status" aria-live="polite"></p>
   </div>
@@ -41,7 +44,8 @@
     fetch('https://pakka-server.onrender.com/demo-send?k=' + encodeURIComponent(k), {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ to: document.getElementById('to').value.replace(/\D/g, '') })
+      body: JSON.stringify({ to: document.getElementById('to').value.replace(/\D/g, ''),
+                             text: document.getElementById('msg').value })
     }).then(function (r) { return r.text(); })
       .then(function (t) { out.textContent = t; })
       .catch(function () { out.textContent = 'नहीं गया — try again.'; });
