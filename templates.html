@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pakka — message templates</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="style.css">
+<style>
+  .step { font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; opacity:0.65; margin:0 0 0.35em }
+  table.tpl { width:100%; border-collapse:collapse; font-size:0.85rem }
+  table.tpl th, table.tpl td { text-align:left; padding:6px 8px; border-bottom:1px solid rgba(128,128,128,0.25) }
+  table.tpl th { font-size:0.72rem; letter-spacing:0.06em; text-transform:uppercase; opacity:0.6 }
+  #log { background:rgba(128,128,128,0.12); padding:10px; font-size:0.72rem; line-height:1.45;
+         white-space:pre-wrap; word-break:break-all; max-height:19em; overflow:auto; margin:0 }
+  .row2 { display:flex; gap:10px; flex-wrap:wrap }
+  .row2 > * { flex:1 1 9em }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="mark" href="index.html"><span class="dev">पक्का</span>Pakka</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="eyebrow">Merchant console</p>
+  <h1 style="font-size:1.1rem">WhatsApp message templates</h1>
+  <p class="lede" style="font-size:0.9rem">
+    Pakka reads, creates and deletes message templates on the connected WhatsApp
+    Business Account through the WhatsApp Business Management API. Every request
+    and response is shown at the bottom of this page.
+  </p>
+
+  <div class="card">
+    <p class="step">Step 1 — Read templates on this WhatsApp Business Account</p>
+    <p><button id="refresh">Refresh template list</button></p>
+    <table class="tpl">
+      <thead><tr><th>Name</th><th>Category</th><th>Language</th><th>Status</th><th></th></tr></thead>
+      <tbody id="rows"><tr><td colspan="5">Loading…</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <p class="step">Step 2 — Create a template</p>
+    <label for="name"><strong>Name</strong> (lowercase, underscores)</label>
+    <input id="name" type="text" maxlength="60" value="booking_confirmation" style="width:100%">
+    <div class="row2">
+      <div>
+        <label for="cat"><strong>Category</strong></label>
+        <select id="cat" style="width:100%">
+          <option value="UTILITY">UTILITY</option>
+          <option value="MARKETING">MARKETING</option>
+        </select>
+      </div>
+      <div>
+        <label for="lang"><strong>Language</strong></label>
+        <select id="lang" style="width:100%">
+          <option value="hi">hi — Hindi</option>
+          <option value="en_US">en_US — English (US)</option>
+        </select>
+      </div>
+    </div>
+    <label for="body"><strong>Body</strong> — use {{1}}, {{2}} for variables.
+      A variable cannot be the first or last thing in the body.</label>
+    <textarea id="body" rows="3" maxlength="900" style="width:100%">Your booking is confirmed for {{1}} at {{2}}. Your reference is {{3}} — please show it at the gate.</textarea>
+    <label for="samples"><strong>Sample values</strong> (comma separated, one per variable)</label>
+    <input id="samples" type="text" value="Tuesday, 8pm, BA0001" style="width:100%">
+    <p><button id="create">Create template</button></p>
+  </div>
+
+  <div class="card">
+    <p class="step">Step 3 — API activity</p>
+    <pre id="log">Ready.</pre>
+  </div>
+</main>
+
+<script>
+(function () {
+  var k = new URLSearchParams(location.search).get('k') || '';
+  var logEl = document.getElementById('log');
+  var rows = document.getElementById('rows');
+
+  function log(t) { logEl.textContent = t + '\n\n' + logEl.textContent; logEl.scrollTop = 0; }
+
+  function api(payload) {
+    return fetch('https://pakka-server.onrender.com/templates-api?k=' + encodeURIComponent(k), {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      log('→ ' + (d.method || 'POST') + ' ' + (d.url || '') +
+          '\n← ' + (d.status || '') + ' ' + JSON.stringify(d.json || d, null, 1));
+      return d;
+    });
+  }
+
+  function draw(d) {
+    var list = (d.json && d.json.data) || [];
+    if (!list.length) { rows.innerHTML = '<tr><td colspan="5">No templates yet.</td></tr>'; return; }
+    rows.innerHTML = '';
+    list.forEach(function (t) {
+      var tr = document.createElement('tr');
+      ['name', 'category', 'language', 'status'].forEach(function (f) {
+        var td = document.createElement('td'); td.textContent = t[f] || '—'; tr.appendChild(td);
+      });
+      var td = document.createElement('td');
+      var b = document.createElement('button');
+      b.textContent = 'Delete';
+      b.onclick = function () {
+        if (!confirm('Delete template "' + t.name + '"?')) return;
+        b.disabled = true;
+        api({ action: 'delete', name: t.name }).then(refresh);
+      };
+      td.appendChild(b); tr.appendChild(td);
+      rows.appendChild(tr);
+    });
+  }
+
+  function refresh() { return api({ action: 'list' }).then(draw); }
+
+  document.getElementById('refresh').onclick = refresh;
+
+  document.getElementById('create').onclick = function () {
+    var btn = this; btn.disabled = true;
+    api({
+      action: 'create',
+      name: document.getElementById('name').value,
+      category: document.getElementById('cat').value,
+      language: document.getElementById('lang').value,
+      body: document.getElementById('body').value,
+      samples: document.getElementById('samples').value.split(',')
+    }).then(refresh).then(function () { btn.disabled = false; });
+  };
+
+  refresh();
+})();
+</script>
+
+</body>
+</html>

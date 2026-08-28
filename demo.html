@@ -6,6 +6,12 @@
 <title>Pakka — live demo</title>
 <meta name="robots" content="noindex">
 <link rel="stylesheet" href="style.css">
+<style>
+  /* The API exchange is printed here so a reviewer can see the Cloud API call
+     itself, not just a success message. */
+  #out { background:rgba(128,128,128,0.12); padding:10px; font-size:0.72rem; line-height:1.45;
+         white-space:pre-wrap; word-break:break-all; margin:0; min-height:1.4em }
+</style>
 </head>
 <body>
 
@@ -31,7 +37,7 @@
     <textarea id="msg" rows="3" maxlength="500" style="width:100%"
       placeholder="आपकी बुकिंग पक्की है ✅ कल शाम 8 बजे मिलते हैं।"></textarea>
     <p><button id="go">Send message via Cloud API</button></p>
-    <p id="out" role="status" aria-live="polite"></p>
+    <pre id="out" role="status" aria-live="polite"></pre>
   </div>
 </main>
 
