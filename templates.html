@@ -49,14 +49,18 @@
      into noise. */
   main.wrap { max-width: 68rem }
   header .wrap { max-width: 68rem }
-  .cols { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 0.9rem;
-          align-items: stretch; grid-auto-rows: minmax(0, min-content) }
+  /* The left column sets the height; the right column is pinned to it and the
+     log scrolls internally. Grid stretch alone kept letting the log's content
+     drive the row taller. */
+  .cols { position: relative; display: grid;
+          grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 0.9rem }
   .cols > * { min-width: 0 }
-  .cols > .col-right { position: sticky; top: 0.6rem }
+  .col-right { position: absolute; top: 0; bottom: 0; left: calc(50% + 0.45rem); right: 0 }
   .cols .card:last-child { margin-bottom: 0 }
   /* the log fills its column so the whole exchange stays on screen */
   .col-right { display: flex; flex-direction: column; min-height: 0 }
-  .col-right .card { flex: 1; display: flex; flex-direction: column; min-height: 0 }
+  .col-right .card { flex: 1; display: flex; flex-direction: column; min-height: 0;
+                     overflow: hidden; margin-bottom: 0 }
   .col-right #log { flex: 1; min-height: 0; max-height: none }
 
   /* Refresh sits in the card corner rather than eating a row of its own. */
@@ -65,7 +69,7 @@
              padding: 3px 7px; font-size: 0.95rem; border-radius: 4px; cursor: pointer }
   @media (max-width: 46rem) {
     .cols { grid-template-columns: 1fr }
-    .cols > .col-right { position: static }
+    .col-right { position: static }
     .col-right #log { max-height: 14em }
   }
 </style>
