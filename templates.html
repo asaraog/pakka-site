@@ -34,6 +34,22 @@
          white-space: pre-wrap; word-break: break-all; max-height: 12em; overflow: auto; margin: 0 }
   .row3 { display: flex; gap: 8px; flex-wrap: wrap }
   .row3 > * { flex: 1 1 8em }
+
+  /* Wider than the site's 42rem prose measure: this is a console, not an
+     article, and the API log needs room to show a Graph URL without wrapping
+     into noise. */
+  main.wrap { max-width: 68rem }
+  .cols { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 0.9rem;
+          align-items: start }
+  .cols > .col-right { position: sticky; top: 0.6rem }
+  .cols .card:last-child { margin-bottom: 0 }
+  /* the log fills its column so the whole exchange stays on screen */
+  .col-right #log { max-height: 26em }
+  @media (max-width: 46rem) {
+    .cols { grid-template-columns: 1fr }
+    .cols > .col-right { position: static }
+    .col-right #log { max-height: 14em }
+  }
 </style>
 </head>
 <body>
@@ -53,6 +69,8 @@
     and response is shown at the bottom of this page.
   </p>
 
+  <div class="cols">
+    <div class="col-left">
   <div class="card">
     <p class="step">Step 1 — Read templates on this WhatsApp Business Account</p>
     <p><button id="refresh">Refresh template list</button></p>
@@ -61,7 +79,6 @@
       <tbody id="rows"><tr><td colspan="5">Loading…</td></tr></tbody>
     </table>
   </div>
-
   <div class="card">
     <p class="step">Step 2 — Create a template</p>
     <div class="row3">
@@ -90,10 +107,13 @@
     <input id="samples" type="text" value="Tuesday, 8pm, BA0001" style="width:100%">
     <p><button id="create">Create template</button></p>
   </div>
-
+    </div>
+    <div class="col-right">
   <div class="card">
     <p class="step">Step 3 — API activity</p>
     <pre id="log">Ready.</pre>
+  </div>
+    </div>
   </div>
 </main>
 
