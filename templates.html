@@ -48,15 +48,16 @@
      article, and the API log needs room to show a Graph URL without wrapping
      into noise. */
   main.wrap { max-width: 68rem }
+  header .wrap { max-width: 68rem }
   .cols { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 0.9rem;
-          align-items: stretch }
+          align-items: stretch; grid-auto-rows: minmax(0, min-content) }
   .cols > * { min-width: 0 }
   .cols > .col-right { position: sticky; top: 0.6rem }
   .cols .card:last-child { margin-bottom: 0 }
   /* the log fills its column so the whole exchange stays on screen */
-  .col-right { display: flex; flex-direction: column }
-  .col-right .card { flex: 1; display: flex; flex-direction: column }
-  .col-right #log { flex: 1; max-height: none; min-height: 30em }
+  .col-right { display: flex; flex-direction: column; min-height: 0 }
+  .col-right .card { flex: 1; display: flex; flex-direction: column; min-height: 0 }
+  .col-right #log { flex: 1; min-height: 0; max-height: none }
 
   /* Refresh sits in the card corner rather than eating a row of its own. */
   .card { position: relative }
@@ -89,7 +90,7 @@
   <div class="cols">
     <div class="col-left">
   <div class="card">
-    <p class="step">Step 1 — Read templates on this WhatsApp Business Account</p>
+    <p class="step">Templates on this WhatsApp Business Account</p>
     <button id="refresh" title="Refresh template list" aria-label="Refresh template list">&#8635;</button>
     <table class="tpl">
       <thead><tr><th>Name</th><th>Category</th><th>Language</th><th>Status</th><th></th></tr></thead>
@@ -97,7 +98,7 @@
     </table>
   </div>
   <div class="card">
-    <p class="step">Step 2 — Create a template</p>
+    <p class="step">Create a template</p>
     <div class="row3">
       <div>
         <label for="name">Name</label>
@@ -127,7 +128,7 @@
     </div>
     <div class="col-right">
   <div class="card">
-    <p class="step">Step 3 — API activity</p>
+    <p class="step">API activity</p>
     <pre id="log">Ready.</pre>
   </div>
     </div>
