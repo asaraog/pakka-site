@@ -30,8 +30,9 @@
     border-bottom: 1px solid rgba(128,128,128,0.25) }
   table.tpl th { font-size: 0.68rem; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.6 }
   table.tpl button { padding: 2px 8px; font-size: 0.75rem; white-space: nowrap }
-  table.tpl th { white-space: nowrap }
-  table.tpl td:first-child { overflow-wrap: anywhere }
+  table.tpl th, table.tpl td { white-space: nowrap }
+  /* only the name column may wrap - it's the long one */
+  table.tpl td:first-child { white-space: normal; overflow-wrap: anywhere }
   #log { background: rgba(128,128,128,0.12); padding: 9px; font-size: 0.78rem; line-height: 1.45;
          white-space: pre-wrap; word-break: break-all; max-height: 12em; overflow: auto; margin: 0 }
   /* Inputs are width:100% with padding, so without border-box they overflow the
