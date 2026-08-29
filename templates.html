@@ -32,19 +32,33 @@
   table.tpl button { padding: 2px 8px; font-size: 0.75rem }
   #log { background: rgba(128,128,128,0.12); padding: 9px; font-size: 0.78rem; line-height: 1.45;
          white-space: pre-wrap; word-break: break-all; max-height: 12em; overflow: auto; margin: 0 }
-  .row3 { display: flex; gap: 8px; flex-wrap: wrap }
-  .row3 > * { flex: 1 1 8em }
+  /* Inputs are width:100% with padding, so without border-box they overflow the
+     grid column and bleed into the log beside it. */
+  main *, main *::before, main *::after { box-sizing: border-box }
+  main .card { overflow-wrap: anywhere }
+
+  /* All three fields stay on one line inside the narrower column. */
+  .row3 { display: flex; gap: 8px; flex-wrap: nowrap }
+  .row3 > * { flex: 1 1 0; min-width: 0 }
 
   /* Wider than the site's 42rem prose measure: this is a console, not an
      article, and the API log needs room to show a Graph URL without wrapping
      into noise. */
   main.wrap { max-width: 68rem }
   .cols { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 0.9rem;
-          align-items: start }
+          align-items: stretch }
+  .cols > * { min-width: 0 }
   .cols > .col-right { position: sticky; top: 0.6rem }
   .cols .card:last-child { margin-bottom: 0 }
   /* the log fills its column so the whole exchange stays on screen */
-  .col-right #log { max-height: 26em }
+  .col-right { display: flex; flex-direction: column }
+  .col-right .card { flex: 1; display: flex; flex-direction: column }
+  .col-right #log { flex: 1; max-height: none; min-height: 30em }
+
+  /* Refresh sits in the card corner rather than eating a row of its own. */
+  .card { position: relative }
+  #refresh { position: absolute; top: 0.5rem; right: 0.6rem; line-height: 1;
+             padding: 3px 7px; font-size: 0.95rem; border-radius: 4px; cursor: pointer }
   @media (max-width: 46rem) {
     .cols { grid-template-columns: 1fr }
     .cols > .col-right { position: static }
@@ -73,7 +87,7 @@
     <div class="col-left">
   <div class="card">
     <p class="step">Step 1 — Read templates on this WhatsApp Business Account</p>
-    <p><button id="refresh">Refresh template list</button></p>
+    <button id="refresh" title="Refresh template list" aria-label="Refresh template list">&#8635;</button>
     <table class="tpl">
       <thead><tr><th>Name</th><th>Category</th><th>Language</th><th>Status</th><th></th></tr></thead>
       <tbody id="rows"><tr><td colspan="5">Loading…</td></tr></tbody>
