@@ -148,14 +148,15 @@
 
   function log(t) { logEl.textContent = t + '\n\n' + logEl.textContent; logEl.scrollTop = 0; }
 
-  function api(payload) {
+  function api(payload, silent) {
     return fetch('https://pakka-server.onrender.com/templates-api?k=' + encodeURIComponent(k), {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(payload)
     }).then(function (r) { return r.json(); }).then(function (d) {
-      log('[' + new Date().toLocaleTimeString() + ']  → ' + (d.method || 'POST') + ' ' + (d.url || '') +
-          '\n← ' + (d.status || '') + ' ' + JSON.stringify(d.json || d, null, 1));
+      if (!silent)
+        log('[' + new Date().toLocaleTimeString() + ']  → ' + (d.method || 'POST') + ' ' + (d.url || '') +
+            '\n← ' + (d.status || '') + ' ' + JSON.stringify(d.json || d, null, 1));
       return d;
     });
   }
@@ -182,9 +183,9 @@
     });
   }
 
-  function refresh() { return api({ action: 'list' }).then(draw); }
+  function refresh(silent) { return api({ action: 'list' }, silent).then(draw); }
 
-  document.getElementById('refresh').onclick = refresh;
+  document.getElementById('refresh').onclick = function () { refresh(); };
 
   document.getElementById('create').onclick = function () {
     var btn = this; btn.disabled = true;
@@ -198,7 +199,7 @@
     }).then(refresh).then(function () { btn.disabled = false; });
   };
 
-  refresh();
+  refresh(true);
 })();
 </script>
 
