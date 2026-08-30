@@ -153,7 +153,7 @@
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(payload)
     }).then(function (r) { return r.json(); }).then(function (d) {
-      log('→ ' + (d.method || 'POST') + ' ' + (d.url || '') +
+      log('[' + new Date().toLocaleTimeString() + ']  → ' + (d.method || 'POST') + ' ' + (d.url || '') +
           '\n← ' + (d.status || '') + ' ' + JSON.stringify(d.json || d, null, 1));
       return d;
     });
