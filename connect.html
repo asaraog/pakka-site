@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pakka — connect WhatsApp</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="style.css">
+<style>
+  main { font-size: 15px }
+  .card { padding: 1rem 1.1rem; margin: 0 0 0.8rem }
+  #go { font-size: 1rem; padding: 10px 20px; cursor: pointer }
+  #log { background: rgba(128,128,128,0.12); padding: 10px; font-size: 0.78rem; line-height: 1.5;
+         white-space: pre-wrap; word-break: break-all; margin: 0.8rem 0 0; min-height: 2em }
+  .ok { color: #1a7f37 } .err { color: #b3261e }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="mark" href="index.html"><span class="dev">पक्का</span>Pakka</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="eyebrow">Connect your number</p>
+  <h1 style="font-size:1.15rem">अपना WhatsApp नंबर पक्का से जोड़िए</h1>
+  <p class="lede" style="font-size:0.9rem">
+    Connect your existing WhatsApp Business number. Your number stays yours, your
+    WhatsApp Business app keeps working, and Pakka answers your customers' booking
+    messages on the same number.
+  </p>
+
+  <div class="card">
+    <p><button id="go">WhatsApp से जोड़ें · Connect with WhatsApp</button></p>
+    <pre id="log">Ready.</pre>
+  </div>
+</main>
+
+<script>
+(function () {
+  var APP_ID = '1060094196499255';
+  var CONFIG_ID = '1775642093627787';
+  var SERVER = 'https://pakka-server.onrender.com';
+  var logEl = document.getElementById('log');
+  function log(t, cls) { logEl.textContent = t; logEl.className = cls || ''; }
+
+  // Capture the WABA + phone number id from the embedded-signup message event.
+  var sessionInfo = { waba_id: null, phone_number_id: null };
+  window.addEventListener('message', function (e) {
+    if (e.origin !== 'https://www.facebook.com' && e.origin !== 'https://web.facebook.com') return;
+    try {
+      var d = JSON.parse(e.data);
+      if (d.type === 'WA_EMBEDDED_SIGNUP' && d.event === 'FINISH') {
+        sessionInfo.waba_id = d.data.waba_id;
+        sessionInfo.phone_number_id = d.data.phone_number_id;
+      }
+    } catch (err) { /* not our message */ }
+  });
+
+  function fbLogin() {
+    log('Opening WhatsApp signup…');
+    FB.login(function (resp) {
+      if (resp.authResponse && resp.authResponse.code) {
+        var code = resp.authResponse.code;
+        log('Signup complete. Finishing connection…');
+        fetch(SERVER + '/es-complete', {
+          method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ code: code,
+            waba_id: sessionInfo.waba_id, phone_number_id: sessionInfo.phone_number_id })
+        }).then(function (r) { return r.json(); }).then(function (d) {
+          if (d.ok) log('✅ जुड़ गया! WABA ' + d.waba_id + ', number ' + d.phone_number_id +
+                        '\nWe will finish setup and message you shortly.', 'ok');
+          else log('Could not finish: ' + JSON.stringify(d.error), 'err');
+        }).catch(function (e) { log('Network error: ' + e.message, 'err'); });
+      } else {
+        log('Signup was cancelled or not completed.', 'err');
+      }
+    }, {
+      config_id: CONFIG_ID,
+      response_type: 'code',
+      override_default_response_type: true,
+      extras: { setup: {}, featureType: 'whatsapp_business_app_onboarding', sessionInfoVersion: '3' }
+    });
+  }
+
+  window.fbAsyncInit = function () {
+    FB.init({ appId: APP_ID, autoLogAppEvents: true, xfbml: false, version: 'v21.0' });
+    document.getElementById('go').disabled = false;
+  };
+  document.getElementById('go').disabled = true;
+  document.getElementById('go').onclick = fbLogin;
+})();
+</script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
+</body>
+</html>
